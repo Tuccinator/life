@@ -1,0 +1,243 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Life Management</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="https://cdn0.iconfinder.com/data/icons/feather/96/clock-128.png" />
+
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/compiled/layout.css">
+        <link rel="stylesheet" href="css/compiled/proxima.css">
+        <link rel="stylesheet" href="css/compiled/budicons.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <script type="text/x-handlebars">
+        <!-- Add your site or application content here -->
+        <header class="header">
+            <h1><i class="glyphicon glyphicon-globe"></i> Life</h1>
+            <ul>
+                <li>{{#link-to "tasks.create" class="btn btn-success"}}<i class="glyphicon glyphicon-plus"></i> Create Task{{/link-to}}</li>
+            </ul>
+        </header>
+
+        <div id="content-container">
+            <section id="sidebar">
+                <div id="back-button">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                </div>
+                <hr>
+                <ul>
+                    <li>{{#link-to "home" activeClass="active"}}<i class="glyphicon glyphicon-home"></i> Home{{/link-to}}</li>
+                    <li><a href="#"><i class="glyphicon glyphicon-list-alt"></i> Projects</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-stats"></i> Statistics</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-cloud"></i> Ideas</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-book"></i> Journals</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Task Management</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-tint red"></i> Colours</a></li>
+                </ul>
+            </section>
+            <div id="content">
+                    {{outlet}}
+                    {{view "backPress"}}
+            </div>
+        </div>
+</script>
+
+        <script type="text/x-handlebars" data-template-name="home">
+            <h1>Home</h1>
+
+            <div>
+                <table class="table table-striped">
+                    <caption>Today's Tasks</caption>
+                    <tr>
+                        <th>Task</th>
+                        <th>Simple Description</th>
+                        <th>Commence</th>
+                    </tr>
+                    {{#each task in today itemController="task"}}
+                        <tr {{bind-attr class="task.started:info task.completed:success" }}>
+                            <td>{{task.name}}</td>
+                            <td>{{task.shortDescription}}</td>
+                            {{#if task.completed}}
+                                <td>{{currentDate task.completed }}</td>
+                            {{else}}
+                                {{#if task.started}}
+                                    <td><a href="#" {{action "completeTask" task }}>Complete</a></td>
+                                {{else}}
+                                    <td><a href="#" {{action "startTask" task }}>Start</a></td>
+                                {{/if}}
+                            {{/if}}
+                        </tr>
+                    {{/each}}
+                </table>
+
+                <table class="table table-striped">
+                    <caption>
+                        <strong>Tomorrow's Tasks</strong>&nbsp;
+                        {{#link-to "tasks.add" class="btn btn-xs btn-primary pull-right"}}Add Task{{/link-to}}
+                    </caption>
+                    <tr>
+                        <th>Task</th>
+                        <th>Simple Description</th>
+                        <th>Edit</th>
+                        <th>Remove</th>
+                    </tr>
+
+                    {{#each task in tomorrow itemController="task"}}
+                        <tr>
+                            <td>{{task.name}}</td>
+                            <td>{{task.shortDescription}}</td>
+                            <td>{{#link-to "tasks.edit" task}}Edit{{/link-to}}</td>
+                            <td><a href="#" {{action "deleteTask" task}}>Remove</a></td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="tasks">
+            {{outlet}}
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="tasks/create">
+            <h1>Create Task</h1>
+
+            <form {{action "createTask" on="submit" }}>
+                <div class="form-group">
+                    <label>Task Name</label>
+                    {{input type="text" class="form-control" value=name id="name"}} 
+                </div>
+
+                <div class="form-group">
+                    <label>Short Description</label>
+                    {{textarea class="form-control" value=shortDescription id="shortDescription"}}
+                </div>
+
+                <div class="form-group">
+                    <label>Long Description</label>
+                    {{textarea class="form-control" value=longDescription id="longDescription"}}
+                </div>
+
+                <input type="submit" class="btn btn-primary" />
+            </form>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="tasks/edit">
+            <h1>Edit Task</h1>
+
+            <form {{action "editTask" on="submit" }}>
+                <div class="form-group">
+                    <label>Task Name</label>
+                    {{input type="text" class="form-control" value=name id="name"}} 
+                </div>
+
+                <div class="form-group">
+                    <label>Short Description</label>
+                    {{textarea class="form-control" value=shortDescription id="shortDescription"}}
+                </div>
+
+                <div class="form-group">
+                    <label>Long Description</label>
+                    {{textarea class="form-control" value=longDescription id="longDescription"}}
+                </div>
+
+                <input type="submit" class="btn btn-primary" />
+            </form>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="tasks/add">
+            <h1>Add Task</h1>
+
+            <form {{action "addTask" on="submit" }}>
+                <div class="form-group">
+                    <label>Day</label>
+                    {{view "select"
+                        content=days
+                        optionValuePath="content.id"
+                        optionLabelPath="content.day"
+                        selectionBinding="day"
+                        class="form-control"
+                    }}
+                </div>
+                <div class="form-group">
+                    <label>Task Name</label>
+                    {{input type="text" class="form-control" value=name id="name"}} 
+                </div>
+
+                <div class="form-group">
+                    <label>Short Description</label>
+                    {{textarea class="form-control" value=shortDescription id="shortDescription"}}
+                </div>
+
+                <div class="form-group">
+                    <label>Long Description</label>
+                    {{textarea class="form-control" value=longDescription id="longDescription"}}
+                </div>
+
+                <input type="submit" class="btn btn-primary" />
+            </form>
+        </script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+        <!-- Graphing data -->
+        <script src="js/chart.js"></script>
+
+        <script type="text/javascript">
+            /*
+            var canvas = document.getElementById('graphCanvas');
+            var ctx = canvas.getContext('2d');
+
+            var data = [
+                {
+                    label: 'Pinterest',
+                    color: '#D93E30',
+                    highlight: '#FF4939',
+                    value: 50
+                },
+
+                {
+                    label: 'Dresses',
+                    color: '#691EBD',
+                    highlight: '#8928F7',
+                    value: 25
+                }
+            ];
+
+            var myDoughnutChart = new Chart(ctx).Doughnut(data, {});
+            */
+        </script>
+
+        <!-- ember dependencies -->
+        <script src="js/libs/handlebars.js"></script>
+        <script src="js/libs/ember.js"></script>
+        <script src="js/libs/ember-data.js"></script>
+        <script src="js/libs/moment.js"></script>
+
+        <script src="js/application.js"></script>
+        <script src="js/router.js"></script>
+
+        <!-- models -->
+        <script src="js/models/task.js"></script>
+
+        <!-- controllers -->
+        <script src="js/controllers/home_controller.js"></script>
+        <script src="js/controllers/tasks_controller.js"></script>
+        <script src="js/controllers/task_controller.js"></script>
+        <script src="js/controllers/tasks_edit_controller.js"></script>
+        <script src="js/controllers/tasks_add_controller.js"></script>
+
+        <!-- views -->
+        <script src="js/views/back_press_view.js"></script>
+    </body>
+</html>

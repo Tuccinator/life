@@ -1,0 +1,10 @@
+CREATE TABLE `tasks`(
+	id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	name VARCHAR(100) NOT NULL,
+	short_description TEXT NOT NULL,
+	long_description TEXT NOT NULL,
+	day DATETIME NOT NULL,
+	started DATETIME NULL,
+	completed DATETIME NULL,
+	PRIMARY KEY(id)
+)Engine=InnoDB;

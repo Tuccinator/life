@@ -1,0 +1,151 @@
+$blue: #35436C;
+$white: #fff;
+$green: #05A229;
+$asphalt: #333;
+$red: #D93E30;
+$bright-red: #FF4939;
+$purple: #691EBD;
+$bright-purple: #8928F7;
+$light-gray: #efefef;
+$gray: #dcdcdc;
+
+html,body {
+	height: 100%;
+	overflow: hidden;
+}
+
+.header {
+	height: 4.5em;
+	background-color: $blue;
+
+	h1 {
+		margin: 0;
+		padding: 0.3em;
+		display: inline-block;
+		color: white;
+		font-weight: bold;
+		text-shadow: -2px 2px rgba(0,0,0,0.2);
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		float: right;
+
+		li {
+			padding: 1em;
+
+			a {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.ember-view {
+	height: 100%;
+	width: 100%;
+}
+
+a.ember-view {
+	height: auto;
+	width: auto;
+}
+
+#content-container {
+	height: 100%;
+
+	#content {
+		padding: 1em;
+		width: 80%;
+		float: right;
+
+		h1 {
+			margin: 0;
+			padding: 0;
+		}
+	}
+}
+
+#sidebar {
+	background-color: $light-gray;
+	border-right: 1px solid $gray;
+	width: 20%;
+	float: left;
+	clear: both;
+	height: 100%;
+
+	hr {
+		margin: 1em;
+		margin-bottom: 0;
+		border-top: 1px solid $gray;
+	}
+
+	#back-button {
+		cursor: pointer;
+		overflow: hidden;
+		color: rgba(0,0,0,0.2);
+
+		:hover {
+			color: $asphalt;
+		}
+		
+		i {
+			font-size: 2em;
+			padding: 0.5em 0.5em 0 0;
+			float: right;
+		}
+	}
+
+	ul {
+		margin: 0;
+		padding: 0 1em;
+		list-style-type: none;
+
+		li {
+			border-bottom: 1px solid $gray;
+			-webkit-transition: all 0.2s;
+			-moz-transition: all 0.2s;
+			-ms-transition: all 0.2s;
+			-o-transition: all 0.2s;
+			transition: all 0.2s;
+
+			&:hover {
+				background-color: $gray;
+			}
+
+			a {
+				font-weight: bold;
+				letter-spacing: 1px;
+				color: $asphalt;
+				text-decoration: none;
+				display: block;
+				padding: 1em;
+			}
+		}
+	}
+}
+
+#restore-button {
+	color: rgba(0,0,0,0.2);
+	cursor: pointer;
+	position: absolute;
+
+	:hover {
+		color: $asphalt;
+	}
+
+	i {
+		font-size: 2em;
+		margin: 0.5em;
+	}
+}
+
+.red {
+	color: $green;
+}
+
+.active {
+	background-color: $gray;
+}
