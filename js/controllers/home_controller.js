@@ -4,7 +4,7 @@ Life.HomeController = Ember.ArrayController.extend({
 			var current = moment().format('M D YY');
 			var taskDate = moment(task.get('day')).format('M D YY');
 
-			return taskDate === current;
+			return taskDate === current || (task.get('completed') === null && taskDate < current) == true;
 		});
 		return todayTasks;
 	}.property('@each.day'),

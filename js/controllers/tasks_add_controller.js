@@ -10,7 +10,7 @@ Life.TasksAddController = Ember.ObjectController.extend({
 			if(daySelect == "Today") {
 				day = moment().format('YYYY-MM-DD H:m:s');
 			} else {
-				day = moment().add(1, 'days').format('YYYY-MM-DD H:m:s');
+				day = moment().add(1, 'days').format('YYYY-MM-DD 00:00:01');
 			}
 
 			var task = this.store.createRecord('task', {

@@ -21,5 +21,13 @@ Life.TaskController = Ember.ObjectController.extend({
 			task.set('completed', moment().format('YYYY-MM-DD H:m:s'));
 			task.save();
 		}
-	}
+	},
+
+	addedAgo: function() {
+		var task = this.get('model');
+		var current = moment();
+		var taskDate = moment(this.get('day'));
+
+		return taskDate.from(current);
+	}.property('day')
 });
